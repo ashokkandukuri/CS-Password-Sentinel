@@ -35,3 +35,15 @@ The app includes a **modern dark/light theme**, an informative UI, and secure ba
 ```bash
 git clone https://github.com/ashokkandukuri/CS-Password-Sentinel.git
 cd CS-Password-Sentinel
+## 📸 Screenshots
+
+<p align="center">
+  <img src="screenshots/homepage.png" width="45%" alt="Homepage" />
+  <img src="screenshots/password-check.png" width="45%" alt="Password Check" />
+</p>
+
+<p align="center">
+  <img src="screenshots/MD5%20and%20SHA-1%20hashing.png" width="45%" alt="MD5 and SHA-1 Hashing Demo" />
+  <img src="screenshots/adv-pass-Concepts.png" width="45%" alt="Advanced Password Concepts" />
+</p>
+
