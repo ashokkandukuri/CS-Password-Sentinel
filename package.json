@@ -1,0 +1,22 @@
+{
+  "name": "password-checker-fullstack",
+  "version": "1.0.0",
+  "description": "Password Strength & Breach Checker",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^6.8.0",
+    "helmet": "^7.0.0",
+    "node-fetch": "^2.7.0",
+    "zxcvbn": "^4.4.2" 
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

@@ -1,0 +1,391 @@
+/* --- Global Color Variables (Light Theme by Default) --- */
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --bg-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-color: #212529;
+  --muted-text: #6c757d;
+  --border-color: #e9ecef;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --section-bg: #f1f3f5;
+  --pre-bg: #e9ecef;
+  --pre-text: #333;
+  --warn-color: #d93025;
+  --strength-bar-bg: #e9ecef;
+  --strength-bar-border: #ddd;
+}
+
+/* --- 🌙 Dark Theme Overrides --- */
+body.dark-theme {
+  --primary-color: #0d6efd;
+  --primary-hover: #3b82f6;
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-color: #e6eef8;
+  --muted-text: #98a3b8;
+  --border-color: #334155;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --section-bg: #131c2d;
+  --pre-bg: #131c2d;
+  --pre-text: #cfe3ff;
+  --warn-color: #ffb4b4;
+  --strength-bar-bg: #0b1220;
+  --strength-bar-border: #16324a;
+}
+/* --- End of Themes --- */
+
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* --- ⭐️ Header, Logo, & Theme Switch --- */
+header.main-header {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  color: var(--primary-color);
+}
+
+header.main-header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+.theme-switcher {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+.theme-toggle-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.theme-toggle-label {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: .4s;
+}
+.theme-toggle-label:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .4s;
+}
+.theme-toggle-checkbox:checked + .theme-toggle-label {
+  background-color: var(--primary-color);
+}
+.theme-toggle-checkbox:checked + .theme-toggle-label:before {
+  transform: translateX(22px);
+}
+/* --- End of Header --- */
+
+
+footer.main-footer {
+  text-align: center;
+  padding: 30px 0;
+  margin-top: 40px;
+  border-top: 1px solid var(--border-color);
+  font-size: 14px;
+  color: var(--muted-text);
+}
+
+/* --- The Tool Card --- */
+.tool-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  transition: background-color 200ms ease;
+}
+
+.tool-card h2 {
+  margin-top: 0;
+  font-size: 22px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+input[type="password"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 15%, transparent);
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background-color 180ms ease;
+}
+.btn:hover {
+  background: var(--primary-hover);
+}
+
+.muted {
+  color: var(--muted-text);
+  font-size: 14px;
+}
+
+.strength-bar {
+  height: 12px;
+  border-radius: 8px;
+  background: var(--strength-bar-bg);
+  overflow: hidden;
+  margin-top: 10px;
+  border: 1px solid var(--strength-bar-border);
+}
+.strength-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 180ms ease, background-color 180ms ease;
+  background: #ef4444; /* Start as red */
+}
+.strength-fill[data-score="0"] { width: 10%; background: #ef4444; }
+.strength-fill[data-score="1"] { width: 25%; background: #ef4444; }
+.strength-fill[data-score="2"] { width: 50%; background: #f59e0b; }
+.strength-fill[data-score="3"] { width: 75%; background: #10b981; }
+.strength-fill[data-score="4"] { width: 100%; background: #06b6d4; }
+
+
+.section {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--section-bg);
+  border: 1px solid var(--border-color);
+}
+
+.warn {
+  color: var(--warn-color);
+  font-weight: 700;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 13px;
+  color: var(--pre-text);
+  background: var(--pre-bg);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.small {
+  font-size: 14px;
+  color: var(--muted-text);
+}
+
+/* --- Knowledge Content Section --- */
+.content-section {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  margin-top: 30px;
+}
+
+.content-section h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.content-section ul, .content-section ol {
+  padding-left: 20px;
+}
+.content-section li {
+  margin-bottom: 10px;
+}
+.content-section code {
+  background: var(--section-bg);
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* --- ⭐️ New Grid Styles --- */
+.advanced-topics {
+  border: 2px solid var(--primary-color);
+  background: color-mix(in srgb, var(--primary-color) 3%, var(--card-bg));
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Default to 1 column on mobile */
+  gap: 20px;
+}
+
+.topic-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.topic-card h4 {
+  margin: 0 0 8px 0;
+  color: var(--text-color);
+}
+.topic-card p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted-text);
+}
+
+/* On wider screens, switch to 2 columns */
+@media (min-width: 768px) {
+  .topic-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* --- ⭐️ Hashing Comparison Styles ⭐️ --- */
+#hashCompareSection {
+  /* Make it stand out a bit */
+  border-top: 4px solid var(--primary-color);
+}
+
+.hash-compare-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 column on mobile */
+  gap: 20px;
+}
+
+.hash-card {
+  border-radius: 8px;
+  padding: 16px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.hash-card.bad {
+  background: color-mix(in srgb, var(--warn-color) 5%, var(--card-bg));
+  border-color: var(--warn-color);
+}
+.hash-card.bad h4 {
+  color: var(--warn-color);
+}
+
+.hash-card.good {
+  background: color-mix(in srgb, #10b981 5%, var(--card-bg));
+  border-color: #10b981;
+}
+.hash-card.good h4 {
+  color: #069568;
+}
+body.dark-theme .hash-card.good h4 {
+  color: #34d399;
+}
+
+
+.hash-card h4 {
+  margin: 0 0 8px 0;
+}
+.hash-card p {
+  margin: 0 0 12px 0;
+  color: var(--muted-text);
+}
+
+.hash-result-box {
+  word-break: break-all;
+  font-size: 14px;
+  padding: 12px;
+}
+
+/* 2 columns on medium screens */
+@media (min-width: 768px) {
+  .hash-compare-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* 3 columns on large screens */
+@media (min-width: 1024px) {
+  .hash-compare-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  /* Make the good one span 3 cols if it's the only one in a row */
+  .hash-card.good {
+    grid-column: 1 / -1;
+  }
+}
+/* ⭐️ --- End of Hashing Styles --- ⭐️ */

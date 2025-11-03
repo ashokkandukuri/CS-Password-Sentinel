@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Password Strength & Breach Checker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="container header-content">
+      <div class="logo-title">
+        <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8zM12 14v5.03c-3.13-1.12-5.5-4.52-5.96-8.03H12z"/>
+        </svg>
+        <h1>Password Checker</h1>
+      </div>
+
+      <div class="theme-switcher">
+        <input type="checkbox" id="themeToggle" class="theme-toggle-checkbox" aria-label="Toggle dark mode">
+        <label for="themeToggle" class="theme-toggle-label"></label>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="tool-card">
+      <p class="muted">
+        Type a password to test its strength and check if it appears in data breaches.
+      </p>
+
+      <div class_id="tool-main">
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="Enter password..." autocomplete="new-password" />
+        <div class="row">
+          <button id="checkBtn" class="btn">Check</button>
+          <div class="muted small">or results update automatically after typing.</div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div class="small">Strength</div>
+          <div class="strength-bar" aria-hidden="true"><div id="strengthFill" class="strength-fill"></div></div>
+          <div style="display:flex; justify-content:space-between; margin-top:6px;">
+            <div id="strengthLabel" class="small">N/A</div>
+            <div id="bitsLabel" class="small"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="breachSection" style="display:none;">
+        <div><strong>Breach check</strong> <span class="small"> (Have I Been Pwned, k-anonymity)</span></div>
+        <div style="margin-top:8px;">
+          <div id="breachResult" class="small">—</div>
+        </div>
+      </div>
+
+      <div class="section" id="crackSection" style="display:none;">
+        <div><strong>Estimated crack times</strong></div>
+        <div id="crackList" style="margin-top:8px; font-size:13px;"></div>
+      </div>
+      
+      <div class="section" style="margin-top:12px; display:none;">
+        <strong>Raw JSON</strong>
+        <pre id="rawJson">—</pre>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:12px; display:none;">
+        <strong>Raw JSON</strong>
+        <pre id="rawJson">—</pre>
+      </div>
+
+      <div class="section" id="hashSection" style="display:none;">
+        <div><strong>Simulated Password Storage (PBKDF2)</strong></div>
+        <p class="small" style="margin-bottom: 10px;">
+          This is how a server should store your password. It generates a unique, random "Salt" and combines it with your password (100,000 times) to create a one-way "Hash". This hash is safely stored instead of your password.
+        </p>
+        
+        <div class="small"><strong>Random Salt (stored with user):</strong></div>
+        <pre id="hashSalt" style="font-size: 13px; word-break: break-all;"></pre>
+        
+        <div class="small" style="margin-top: 8px;"><strong>Hashed Password (stored in database):</strong></div>
+        <pre id="hashResult" style="font-size: 13px; word-break: break-all;"></pre>
+      </div>
+      </div>
+
+      </div>
+
+    <section class="content-section" id="hashCompareSection" style="display:none;">
+      <h3>Hashing: The Good vs. The Bad</h3>
+      <p>This shows how different methods would store your password. Notice how the insecure hashes are always the same for the same password, making them easy to crack with pre-computed "rainbow tables".</p>
+      
+      <div class="hash-compare-grid">
+        <div class="hash-card bad">
+          <h4>❌ Unsalted MD5 (Insecure)</h4>
+          <p class="small">Very fast to compute and easily cracked. Never use this.</p>
+          <pre id="hashMd5" class="hash-result-box"></pre>
+        </div>
+        
+        <div class="hash-card bad">
+          <h4>❌ Unsalted SHA-1 (Insecure)</h4>
+          <p class="small">Also fast and vulnerable to the same attacks. Do not use.</p>
+          <pre id="hashSha1" class="hash-result-box"></pre>
+        </div>
+
+        <div class="hash-card good">
+          <h4>✅ Salted PBKDF2 (Secure)</h4>
+          <p class="small">Slow, and the random "Salt" makes it unique every time. This is a modern, correct method.</p>
+          <pre id="hashPbkdf2" class="hash-result-box"></pre>
+        </div>
+      </div>
+    </section>
+    <section class="content-section">
+      <h3>What Makes a Good Password?</h3>
+
+    <div class="section" id="feedbackSection" style="display:none;">
+        <div><strong>Feedback & Suggestions</strong></div>
+        <div id="feedbackWarning" class="small warn" style="margin-top:8px;"></div>
+        <ul id="feedbackSuggestions" class="small" style="margin-top:8px; padding-left: 20px;">
+          </ul>
+      </div>
+
+    <section class="content-section">
+      <h3>What Makes a Good Password?</h3>
+      <p>A strong password is long, complex, and unpredictable. This is measured in "bits of entropy".</p>
+      <ul>
+        <li><strong>Length:</strong> This is the most important factor. Aim for <strong>16 characters or more</strong>. A 12-character password is <i>millions</i> of times stronger than an 8-character one.</li>
+        <li><strong>Complexity:</strong> Use a mix of uppercase letters (A-Z), lowercase letters (a-z), numbers (0-9), and symbols (!, @, #, $).</li>
+        <li><strong>Unpredictability:</strong> Avoid common words, names, dates, or sequences like "12345" or "qwerty". The best passwords are completely random.</li>
+      </ul>
+    </section>
+
+    <section class="content-section advanced-topics">
+      <h3>Advanced Password Concepts</h3>
+      <p>Understanding *how* passwords are attacked helps you build better defenses.</p>
+      
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h4>Hashing vs. Encryption</h4>
+          <p><strong>Encryption</strong> is a two-way process. Data is scrambled and can be unscrambled with a secret key. This is used for sending secret messages. <strong>Hashing</strong> is a one-way process. It turns data into a unique "fingerprint" that cannot be reversed. This is how services should store your password. They hash your login attempt and see if the hash matches the one they have stored.</p>
+        </div>
+        
+        <div class="topic-card">
+          <h4>Salt & Pepper</h4>
+          <p>A **"salt"** is a random, unique value added to your password *before* it's hashed. This is stored with your user info. It stops attackers from using pre-computed "rainbow tables" to crack common passwords. A **"pepper"** is a secret, site-wide key added before hashing. It adds another layer of security, but the salt is more critical for individual account protection.</p>
+        </div>
+        
+        <div class="topic-card">
+          <h4>Brute Force vs. Dictionary Attack</h4>
+          <p>A **Brute Force** attack tries every possible combination of characters (e.g., `a`, `aa`, `ab`, `ac`). This is slow but will *eventually* find any password. A **Dictionary Attack** uses a list of common words, phrases, and known leaked passwords (like `password123` or `Fluffy`). This is much faster and more effective against weak passwords.</p>
+        </div>
+        
+        <div class="topic-card">
+          <h4>Credential Stuffing</h4>
+          <p>This is the most common attack today. Attackers take lists of leaked usernames and passwords from one data breach (e.g., a 2014 forum hack) and "stuff" them into other login forms (like your email or bank). This works because *people re-use passwords*. This is why a password manager and unique passwords for every site are essential.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h3>How This Tool Protects Your Privacy</h3>
+      <p>This tool is safe to use because it respects your privacy at every step. We <strong>never</strong> send your plain-text password to any third party.</p>
+      <ul>
+        <li><strong>Strength Check:</strong> Calculated securely on our server.</li>
+        <li><strong>Breach Check (k-anonymity):</strong> We only send the first 5 characters of your password's *hash* (a scrambled code). The server never knows what you're checking.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="main-footer">
+    <p>A secure password tool. All checks are performed securely.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
